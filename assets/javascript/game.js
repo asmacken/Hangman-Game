@@ -1,124 +1,130 @@
-
-
+// Word Choices Array
 var songTitle = ["superpower",
-    "blue",
-    "blow",
-    "diva",
-    "freedom",
-    "ego",
-    "listen",
-    "irreplaceable",
-    "mine",
-    "formation",
-    "flawless",
-    "halo",
-    "party",
-    "hello",
-    "rocket",
-    "sorry",
-    "partition"];
+  "blue",
+  "blow",
+  "diva",
+  "freedom",
+  "ego",
+  "listen",
+  "irreplaceable",
+  "mine",
+  "formation",
+  "flawless",
+  "halo",
+  "party",
+  "hello",
+  "rocket",
+  "sorry",
+  "partition"
+];
 
-var random = Math.floor(Math.random() * songTitle.length);
-console.log(songTitle);
-
-var song = songTitle[random];
-
+// Correct Song (Word) and letters
+var selectedSong = "";
 var correctLetters = [];
 
+// Count of blanks needed
+var blanks = 0;
+
+// Correctly guessed letters with blanks
+var correctLettersGuessed = [];
+
+// Incorrect guesses
 var wrongLetters = [];
-console.log(song);
 
-var playerGuess;
-
+// Score
 var wins = 0;
 var losses = 0;
 var guesses = 15;
 
+function beginGame() {
+  guesses = 15;
 
-// song underscores
-for(var i = 0; i < song.length; i++) {
-correctLetters.push("_");
-console.log(correctLetters);
+  // Randomly select a song from array
+  selectedSong = songTitle[Math.floor(Math.random() * songTitle.length)];
+
+  // Separate (split) the word into single letters
+  correctLetters = selectedSong.split("");
+
+  // Number of letters in the song
+  blanks = correctLetters.length;
+
+  console.log(selectedSong);
+
+  // Reset the letters guessed
+  correctLettersGuessed = [];
+  wrongLetters = [];
+
+  // Underscores for the letters in the song
+  for (var i = 0; i < blanks; i++) {
+    correctLettersGuessed.push("_");
+  }
+console.log(correctLettersGuessed);
+
+
+  document.getElementById("guessesleft").innerHTML = guesses;
+
+  document.getElementById("letters").innerHTML = correctLettersGuessed.join(" ");
+
+  document.getElementById("wrongletters").innerHTML = wrongLetters.join(" ");
 }
 
-document.getElementById("letters").innerHTML = correctLetters.join(" ");
+function confirmLetter(letter) {
+  var neededLetter = false;
+
+  for (var i = 0; i < blanks; i++) {
+    if (selectedSong[i] === letter) {
+      neededLetter = true;
+    }
+  }
+
+  if (neededLetter) {
+
+    for (var l = 0; l < blanks; l++) {
 
 
-
-var alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-var outputElement = document.getElementById('wrongletters');
-var guessedLetters = []; // stores the letters the user guessed
-
-document.addEventListener('keyup', function (event) {
-var key = event.key.toLowerCase();
-if (alphabet.indexOf(key) !== -1) {
-  // the key is a letter in the alphabet
-  if (guessedLetters.indexOf(key) === -1) {
-    // the key has not been guessed
-    guessedLetters.push(key);
-    var string = guessedLetters.join(''); // join the letters together to one single string
-    outputElement.textContent = string;
+      if (neededLetter[l] === letter) {
+        correctLettersGuessed[l] = letter;
+      }
+    }
+    console.log(correctLettersGuessed);
+  }
+  else {
+    wrongLetters.push(letter);
+    guesses--;
   }
 }
-});
 
-// if (playerGuess(key >= 65 && key <= 90)) {
-//   alert ("Only use letters a-z");
-// }
-//
-// if (event.keyCode >= 65 && event.keyCode <= 90)
-//     alert("input was a-z");
+function nextSong() {
 
-// function playerGuess(event) {
-//   var playerGuess = event.keyCode;
-//   return ((key >= 65 && key <= 90);
-// }
+  document.getElementById("guessesleft").innerHTML = guesses;
+
+  document.getElementById("letters").innerHTML = correctLettersGuessed.join(" ");
+
+  document.getElementById("wrongletters").innerHTML = wrongLetters.join(" ");
+
+  if (correctLetters.toString() === correctLettersGuessed.toString()) {
+
+    wins++;
+    alert("Of course you won, you're Flawless!");
+
+    document.getElementById("wins").innerHTML = wins;
+    beginGame();
+  } else if (guesses === 0) {
+    losses++;
+    alert("You lose! Let me upgrade you!");
+
+    document.getElementById("losses").innerHTML = losses;
+    beginGame();
+
+  }
+
+}
+
+beginGame();
 
 document.onkeyup = function(event) {
-correctLetters.push(playerGuess);
-document.getElementById("letters").innerHTML = correctLetters;
+  var lowercase = String.fromCharCode(event.which).toLowerCase();
 
-var playerGuess = event.keypress;
-if (playerGuess > 97 && playerGuess < 122) {
-  alert ("Only use letters a-z");
-  console.log(playerGuess)
-}
-}
-
-
-
-
-// if (wrongLetters > 0) {
-//   document.getElementById("#wrongletters");
-//   wrongLetters.push("_");
-// }
-
-
-
-
-// document.onkeyup = function(event) {
-// var wrongLetters = event.key;
-// getElementById("wrongletters")
-
-// function myFunction() {
-//     var x = document.getElementById("wrongletters");
-//     x.value = x.value.toUpperCase();
-// }
-
-
-// if (playerGuess)
-
-
-
-
-
-
-
-
-
-
-
-
- // ((playerGuess === "h") || (playerGuess === "a") || (playerGuess === "l") || (playerGuess === "o"))
-
- // var songHalo = "Halo"
+  confirmLetter(lowercase);
+  nextSong();
+};

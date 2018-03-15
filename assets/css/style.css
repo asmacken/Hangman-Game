@@ -43,13 +43,13 @@ h2 {
 h3 {
   font-size: 28px;
 text-align: center;
-color: pink;
+color: white;
 margin-top: 3%;
 }
 
-#Letters {
+#letters {
   font-family: 'Berkshire Swash', cursive;
-  color: white;
+  color: pink;
   font-size: 48px;
   text-align: center;
 }
@@ -66,22 +66,26 @@ margin-top: 3%;
 
 #wins {
   color: pink;
-  font-size: 24px;
+  font-size: 32px;
   text-align: center;
   padding-bottom: .75%
 }
 
 #guessesleft {
   color: pink;
-  font-size: 24px;
+  font-size: 32px;
   text-align: center;
   padding-bottom:1%;
 }
 
 #losses {
   color: pink;
-  font-size: 24px;
+  font-size: 32px;
   text-align: center;
+}
+
+p {
+  font-size: 32px;
 }
 
 @media screen and (max-width: 980px) {}
